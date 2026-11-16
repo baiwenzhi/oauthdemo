@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录 - Mini IDP</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="<%= embed ? 'embed' : '' %>">
+  <% if (!embed) { %><%- include('partials/header') %><% } %>
+  <main class="container narrow<%= embed ? ' embed-main' : '' %>">
+    <section class="card login-card">
+      <h2><%= embed ? '登录以继续授权' : '账号密码登录' %></h2>
+      <p class="muted"><%= embed ? '第三方应用正在请求授权，请登录 Mini IDP。' : '登录 Mini IDP 后即可继续对第三方应用进行授权。' %></p>
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+      <form method="POST" action="/login" class="login-form">
+        <% if (embed) { %><input type="hidden" name="embed" value="1"><% } %>
+        <label for="username">用户名</label>
+        <input id="username" name="username" type="text" placeholder="alice" autocomplete="username" required autofocus>
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" placeholder="123456" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-primary btn-block">登 录</button>
+      </form>
+      <% if (!embed) { %>
+      <p class="muted small">演示账号：alice / 123456，bob / 654321</p>
+      <% } %>
+    </section>
+  </main>
+  <% if (!embed) { %><%- include('partials/footer') %><% } %>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mini IDP - 统一认证中心</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main class="container">
+    <section class="hero">
+      <h1>Mini IDP 统一认证中心</h1>
+      <p>基于 Node.js + Express + EJS 实现的标准 OAuth 2.0 授权服务，支持 PKCE（S256）。</p>
+      <div class="badges">
+        <span class="badge">授权码模式</span>
+        <span class="badge">PKCE (S256)</span>
+        <span class="badge mono">GET /oauth/authorize</span>
+        <span class="badge mono">POST /oauth/token</span>
+        <span class="badge mono">GET /oauth/userinfo</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>已注册的接入应用</h2>
+      <table class="tbl">
+        <thead>
+          <tr><th>应用</th><th>client_id</th><th>类型</th><th>redirect_uri</th></tr>
+        </thead>
+        <tbody>
+          <% clients.forEach(function (c) { %>
+          <tr>
+            <td><%= c.name %></td>
+            <td class="mono"><%= c.client_id %></td>
+            <td><%= c.client_secret ? '机密客户端（有 client_secret）' : '公共客户端（仅 PKCE）' %></td>
+            <td class="mono"><%= c.redirect_uris.join('<br>') %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>演示账号</h2>
+      <p class="mono">alice / 123456　　bob / 654321</p>
+      <p class="muted">Web 应用跑在 :3001，CLI 应用跑在 :3002。登录后即可为接入应用完成授权。</p>
+    </section>
+  </main>
+  <%- include('partials/footer') %>
+</body>
+</html>

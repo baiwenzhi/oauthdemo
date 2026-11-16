@@ -1,0 +1,17 @@
+{
+  "name": "idp-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mini IDP (OAuth 2.0 + PKCE) with Express + EJS, plus a web client and a CLI client using @openid/appauth",
+  "scripts": {
+    "idp": "node idp/server.js",
+    "web": "node web-app/server.js",
+    "cli": "node cli/index.js"
+  },
+  "dependencies": {
+    "@openid/appauth": "^1.3.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>授权回调</title>
+  <style>
+    body { font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+           display: flex; align-items: center; justify-content: center;
+           min-height: 100vh; margin: 0; color: #1f2933; background: #f5f7fa; }
+    .box { text-align: center; }
+    .ok { font-size: 2rem; }
+    .fail { color: #dc2626; font-size: 2rem; }
+    p { color: #6b7686; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="<%= ok ? 'ok' : 'fail' %>"><%= ok ? '✅' : '❌' %></div>
+    <h2><%= ok ? '授权成功' : '授权失败' %></h2>
+    <p id="status"><%= ok ? '已在本应用建立会话，正在通知页面刷新...' : (error + ': ' + (errorDescription || '')) %></p>
+  </div>
+  <script>
+    // token 换取与会话已由本页后台完成，这里只向父窗口发送结果信号（不携带任何敏感数据）
+    const payload = {
+      source: 'mini-idp-embed',
+      type: 'authorization_response',
+      ok: <%- JSON.stringify(ok) %>,
+      error: <%- JSON.stringify(error) %>,
+      errorDescription: <%- JSON.stringify(errorDescription) %>,
+    };
+    // 只允许投递给本应用页面（限定 targetOrigin），父窗口也会校验消息来源
+    window.parent.postMessage(payload, <%- JSON.stringify(parentOrigin) %>);
+    document.getElementById('status').textContent =
+      payload.ok ? '已通知页面完成登录，本窗口即将关闭' : '授权失败，请关闭本窗口重试';
+  </script>
+</body>
+</html>

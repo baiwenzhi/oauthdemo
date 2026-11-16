@@ -1,0 +1,19 @@
+<section class="card">
+  <h2>✅ 已通过 Mini IDP 登录（iframe 无感授权）</h2>
+  <table class="tbl">
+    <tbody>
+      <tr><th>用户唯一标识 (sub)</th><td class="mono"><%= user.sub %></td></tr>
+      <tr><th>账号 (username)</th><td class="mono"><%= user.username %></td></tr>
+      <tr><th>姓名 (name)</th><td><%= user.name %></td></tr>
+      <tr><th>邮箱 (email)</th><td class="mono"><%= user.email %></td></tr>
+      <tr><th>授权范围 (scope)</th><td class="mono"><%= user.scope %></td></tr>
+      <tr><th>token 类型</th><td class="mono"><%= tokens.tokenType %></td></tr>
+      <tr><th>access_token</th><td class="mono"><%= tokens.accessToken.slice(0, 18) %>...（已存入本应用会话）</td></tr>
+      <tr><th>refresh_token</th><td class="mono"><%= tokens.refreshToken.slice(0, 18) %>...</td></tr>
+      <tr><th>token 过期时间</th><td class="mono"><%= new Date(expiresAt).toLocaleString('zh-CN') %></td></tr>
+    </tbody>
+  </table>
+  <p class="muted small" style="margin-top:12px">
+    本会话由 Web 应用后台通过授权码 + code_verifier + client_secret 换取的 token 建立，与 IDP 的登录会话相互独立。
+  </p>
+</section>

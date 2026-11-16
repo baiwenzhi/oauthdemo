@@ -1,0 +1,10 @@
+<div class="user-box">
+  <span class="avatar"><%= user.name.charAt(0) %></span>
+  <span class="uname">
+    <strong><%= user.name %></strong>
+    <span class="muted"><%= user.email %></span>
+  </span>
+  <form method="POST" action="/logout" style="display:inline">
+    <button type="submit" class="btn btn-ghost">退出登录</button>
+  </form>
+</div>

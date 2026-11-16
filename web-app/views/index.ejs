@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web 演示应用 - Mini IDP 接入示例</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">🧩 Web 演示应用</a>
+      <nav class="topnav" id="topnav">
+        <% if (user) { %>
+          <%- include('partials/topnav-auth') %>
+        <% } else { %>
+          <button class="btn btn-primary" id="btn-embed-login" type="button">使用 Mini IDP 登录（无感）</button>
+          <a class="btn btn-ghost" href="/auth/login">跳转登录（整页）</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="main-content">
+    <% if (user) { %>
+      <%- include('partials/account') %>
+    <% } else { %>
+      <section class="card hero">
+        <h1>Web 演示应用</h1>
+        <p>这是一个接入 Mini IDP（OAuth 2.0 + PKCE）的机密客户端示例。</p>
+        <p class="muted">
+          <strong>无感登录</strong>：点击右上角按钮弹出 iframe 加载 IDP 嵌入式登录页，
+          授权完成后由本应用的落地页通过 postMessage 通知本页面，
+          后台换取 token 并原地替换页面内容，全程无需整页刷新。
+          若已在 IDP 登录过，弹窗会一闪而过直接完成授权。
+        </p>
+        <p class="muted">
+          <strong>跳转登录</strong>：传统的 302 整页重定向授权码流程（保留作对比）。
+        </p>
+      </section>
+    <% } %>
+  </main>
+
+  <!-- iframe 登录弹窗 -->
+  <div id="embed-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-mask" id="modal-mask"></div>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span>Mini IDP 授权登录</span>
+        <button class="modal-close" id="modal-close" type="button" aria-label="关闭">×</button>
+      </div>
+      <iframe id="embed-frame" title="Mini IDP 登录" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Web 演示应用 · 接入 Mini IDP (OAuth 2.0 + PKCE)</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
